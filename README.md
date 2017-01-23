@@ -19,7 +19,7 @@ Once your model is loaded and fit, you can execute the api and pass the model as
 #!python
 import apiwrapper
 API = apiwrapper.Api(model=model)
-API.run(port=3001, debug=True)
+API.run(port=5000, debug=True)
 ```
 
 ### Endpoints
@@ -46,27 +46,27 @@ gives the following results : `{"results": [0,1]}`.
 
 Use Docker to serve your API in background on the local network.
 
-## Build
+### Build
 Go into the root of this repo
 
 ```
 $ docker build -t mymodel .
 ```
 
-## Run
+### Run
 
 ```
 $ docker run -d --name container2 -p 5000:5000 myimage
 $ docker exec -d container2 python main.py
 ```
 
-## Test
+### Test
 
 Check your docker IP (here `172.17.0.1`):
 ```
 $ ifconfig
 docker0   Link encap:Ethernet  HWaddr 02:42:a8:32:08:90  
-          inet adr:_172.17.0.1_  Bcast:0.0.0.0  Masque:255.255.0.0
+          inet adr:172.17.0.1  Bcast:0.0.0.0  Masque:255.255.0.0
           adr inet6: fe80::42:a8ff:fe32:890/64 Scope:Lien
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
           Packets reçus:42133 erreurs:0 :0 overruns:0 frame:0
