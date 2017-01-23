@@ -56,8 +56,8 @@ $ docker build -t mymodel .
 ### Run
 
 ```
-$ docker run -d --name container2 -p 5000:5000 myimage
-$ docker exec -d container2 python main.py
+$ docker run -d --name container -p 5000:5000 mymodel
+$ docker exec -d container python main.py
 ```
 
 ### Test
