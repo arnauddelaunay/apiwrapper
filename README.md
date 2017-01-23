@@ -81,7 +81,7 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"data" : [
 	[0.1, 0, 0.6, 1.2],
 	[ 1.2,  1.3,  3.1, 1.8]
 	]
-}' "http://172.0.17.1:5000/predict"
+}' "http://172.17.0.1:5000/predict"
 ```
 gives the following results : `{"results": [0,1]}`.
 
