@@ -7,7 +7,7 @@ Default routes are `predict` and `predict_proba`.
 
 ```
 git clone https://github.com/arnauddelaunay/apiwrapper.git
-cd apiwrapper/
+cd apiwrapper/apiwrapper
 sudo pip install -r requirements.txt
 ```
 
@@ -30,35 +30,58 @@ API.run(port=3001, debug=True)
 
 ### Complete exemple
 
-A complete exemple using sklearn DecisionTreeClassifier on the iris dataset.
+Run `python main.py`
 
-```
-# Import our wrapper
-import apiwrapper
-
-# Sample Decision Tree Classifier
-from sklearn import datasets
-from sklearn import metrics
-from sklearn.tree import DecisionTreeClassifier
-# load the iris datasets
-dataset = datasets.load_iris()
-# fit a CART model to the data
-model = DecisionTreeClassifier()
-model.fit(dataset.data, dataset.target)
-print(model)
-
-# Launch the API
-API = apiwrapper.Api(model=model)
-API.run(port=3001, debug=True)
-```
-
-You can now test the API : 
+And test the API : 
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"data" : [
 	[0.1, 0, 0.6, 1.2],
 	[ 1.2,  1.3,  3.1, 1.8]
 	]
-}' "http://localhost:3001/predict"
+}' "http://localhost:5000/predict"
+```
+gives the following results : `{"results": [0,1]}`.
+
+## DOCKERIZE THE API
+
+Use Docker to serve your API in background on the local network.
+
+## Build
+Go into the root of this repo
+
+```
+$ docker build -t mymodel .
+```
+
+## Run
+
+```
+$ docker run -d --name container2 -p 5000:5000 myimage
+$ docker exec -d container2 python main.py
+```
+
+## Test
+
+Check your docker IP (here `172.17.0.1`):
+```
+$ ifconfig
+docker0   Link encap:Ethernet  HWaddr 02:42:a8:32:08:90  
+          inet adr:_172.17.0.1_  Bcast:0.0.0.0  Masque:255.255.0.0
+          adr inet6: fe80::42:a8ff:fe32:890/64 Scope:Lien
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          Packets reçus:42133 erreurs:0 :0 overruns:0 frame:0
+          TX packets:53797 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 lg file transmission:0 
+          Octets reçus:2374630 (2.3 MB) Octets transmis:322282421 (322.2 MB)
+```
+
+You can now test the API : 
+```
+$ curl -X POST -H "Content-Type: application/json" -d '{"data" : [
+	[0.1, 0, 0.6, 1.2],
+	[ 1.2,  1.3,  3.1, 1.8]
+	]
+}' "http://172.0.17.1:5000/predict"
 ```
 gives the following results : `{"results": [0,1]}`.
 
