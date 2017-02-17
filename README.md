@@ -7,7 +7,7 @@ Default routes are `predict` and `predict_proba`.
 
 ```
 git clone https://github.com/arnauddelaunay/apiwrapper.git
-cd apiwrapper/apiwrapper
+cd apiwrapper
 sudo pip install -r requirements.txt
 ```
 
@@ -40,7 +40,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"data" : [
 	]
 }' "http://localhost:5000/predict"
 ```
-gives the following results : `{"results": [0,1]}`.
+gives the following results : `{"results": [0,2]}`.
 
 ## DOCKERIZE THE API
 
@@ -50,14 +50,13 @@ Use Docker to serve your API in background on the local network.
 Go into the root of this repo
 
 ```
-$ docker build -t mymodel .
+$ sudo docker build -t mymodel .
 ```
 
 ### Run
 
 ```
-$ docker run -d --name container -p 5000:5000 mymodel
-$ docker exec -d container python main.py
+$ sudo docker run -d --name mycontainer -p 5000:5000 mymodel
 ```
 
 ### Test
@@ -67,12 +66,8 @@ Check your docker IP (here `172.17.0.1`):
 $ ifconfig
 docker0   Link encap:Ethernet  HWaddr 02:42:a8:32:08:90  
           inet adr:172.17.0.1  Bcast:0.0.0.0  Masque:255.255.0.0
-          adr inet6: fe80::42:a8ff:fe32:890/64 Scope:Lien
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          Packets reçus:42133 erreurs:0 :0 overruns:0 frame:0
-          TX packets:53797 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 lg file transmission:0 
-          Octets reçus:2374630 (2.3 MB) Octets transmis:322282421 (322.2 MB)
+          ... ... ...
+          ... ... ...
 ```
 
 You can now test the API : 
@@ -83,7 +78,7 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"data" : [
 	]
 }' "http://172.17.0.1:5000/predict"
 ```
-gives the following results : `{"results": [0,1]}`.
+gives the following results : `{"results": [0,2]}`.
 
 
 
